@@ -2,12 +2,21 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import os
 
 
 class MovieRecommender:
 
     def __init__(self):
-        self.movies_df = pd.read_csv('static/data/movies.csv')
+        # Get the absolute path to the CSV file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(current_dir, 'static', 'data', 'movies.csv')
+        
+        # Fallback to relative path if file doesn't exist
+        if not os.path.exists(csv_path):
+            csv_path = 'static/data/movies.csv'
+            
+        self.movies_df = pd.read_csv(csv_path)
         self.vectorizer = TfidfVectorizer(stop_words='english')
 
         # Combine genre and description for content-based filtering
@@ -85,10 +94,3 @@ class MovieRecommender:
     def get_available_moods(self):
         """Get list of available moods for recommendations."""
         return list(self.mood_mapping.keys())
-
-
-# Example Usage:
-# recommender = MovieRecommender()
-# print(recommender.search_movies(query="Avengers"))
-# print(recommender.get_mood_recommendations("happy"))
-# print(recommender.get_featured_movies())
