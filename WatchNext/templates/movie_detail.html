@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="movie-detail-container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ movie.title }}</h1>
+            <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-primary me-2">{{ movie.genre }}</span>
+                <span class="text-muted">Rating: {{ movie.rating }}/10</span>
+            </div>
+            <p class="lead">{{ movie.description }}</p>
+            <button class="btn btn-success watch-now-btn mb-4"
+                    data-movie-title="{{ movie.title }}">
+                <i class="fas fa-play-circle me-2"></i>Watch Now
+            </button>
+        </div>
+    </div>
+
+    <div class="similar-movies mt-5">
+        <h2>Similar Movies</h2>
+        <div class="row g-4">
+            {% for movie in similar_movies %}
+            <div class="col-md-4">
+                <div class="movie-card card h-100" data-movie-id="{{ movie.id }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text">{{ movie.description[:100] }}...</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary">{{ movie.genre }}</span>
+                            <span class="text-muted">Rating: {{ movie.rating }}/10</span>
+                        </div>
+
+                        <button class="btn btn-sm btn-success watch-now-btn mt-2"
+                                data-movie-title="{{ movie.title }}">
+                            <i class="fas fa-play-circle me-1"></i>Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

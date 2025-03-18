@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <h1 class="display-4">Movie Mood Matcher</h1>
+    <p class="lead">Find the perfect movie for your current emotional state</p>
+</section>
+<section class="mood-selector-section my-5">
+    <div class="container">
+        <form id="moodForm" method="get" action="{{ url_for('mood_matcher') }}" class="d-flex flex-wrap justify-content-center gap-3">
+            {% for mood in available_moods %}
+            <button type="submit"
+                    name="mood"
+                    value="{{ mood }}"
+                    class="btn btn-lg mood-btn">
+                {{ mood|title }}
+            </button>
+            {% endfor %}
+        </form>
+    </div>
+</section>
+
+<section class="featured-section my-5">
+    <h2>Featured Movies</h2>
+    <div class="row g-4">
+        {% for movie in featured_movies %}
+        <div class="col-md-4">
+            <div class="movie-card card h-100" data-movie-id="{{ movie.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description[:100] }}...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary">{{ movie.genre }}</span>
+                        <span class="text-muted">Rating: {{ movie.rating }}/10</span>
+                    </div>
+
+                    <button class="btn btn-sm btn-success watch-now-btn mt-2"
+                            data-movie-title="{{ movie.title }}">
+                        <i class="fas fa-play-circle me-1"></i>Watch Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="search-section my-5">
+    <form id="searchForm" class="mt-4">
+        <div class="d-flex justify-content-center">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search movies...">
+        </div>
+    </form>
+</section>
+{% endblock %}

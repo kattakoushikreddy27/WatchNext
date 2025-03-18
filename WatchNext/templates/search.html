@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <form id="searchForm" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-8">
+                <input type="text" id="searchInput" class="search-bar"
+                       placeholder="Search movies..." value="{{ query }}">
+            </div>
+            <div class="col-md-4">
+                <select id="genreFilter" class="form-select">
+                    <option value="">All Genres</option>
+                    {% for genre in genres %}
+                    <option value="{{ genre }}" {% if selected_genre == genre %}selected{% endif %}>
+                        {{ genre }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
+
+    {% if movies[:3] %}
+    <div class="row g-4">
+        {% for movie in movies[:3] %}
+        <div class="col-md-4">
+            <div class="movie-card card h-100" data-movie-id="{{ movie.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description[:100] }}...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary">{{ movie.genre }}</span>
+                        <span class="text-muted">Rating: {{ movie.rating }}/10</span>
+                    </div>
+
+                    <button class="btn btn-sm btn-success watch-now-btn mt-2"
+                            data-movie-title="{{ movie.title }}">
+                        <i class="fas fa-play-circle me-1"></i>Watch Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No movies found matching your search criteria.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

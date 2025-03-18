@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Mood Matcher{% endblock %}
+
+{% block content %}
+<section class="mood-matcher-section">
+    <div class="container">
+        <h1 class="text-center mb-4">Movie Mood Matcher</h1>
+        <p class="lead text-center mb-5">Let us find the perfect movie for your current mood</p>
+
+        <div class="mood-selector mb-5">
+            <form id="moodForm" method="get" action="{{ url_for('mood_matcher') }}" class="d-flex flex-wrap justify-content-center gap-3">
+                {% for mood in available_moods %}
+                <button type="submit"
+                        name="mood"
+                        value="{{ mood }}"
+                        class="btn btn-lg mood-btn {% if selected_mood == mood %}active{% endif %}">
+                    {{ mood|title }}
+                </button>
+                {% endfor %}
+            </form>
+        </div>
+
+        {% if selected_mood %}
+        <div class="mood-results">
+            <h2 class="mb-4">Perfect Movies for Your {{ selected_mood|title }} Mood</h2>
+            <div class="row g-4">
+                {% for movie in recommendations %}
+                <div class="col-md-4">
+                    <div class="movie-card card h-100" data-movie-id="{{ movie.id }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text">{{ movie.description[:100] }}...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">{{ movie.genre }}</span>
+                                <span class="text-muted">Rating: {{ movie.rating }}/10</span>
+                            </div>
+                            <button class="btn btn-sm btn-success watch-now-btn mt-2"
+                                    data-movie-title="{{ movie.title }}">
+                                <i class="fas fa-play-circle me-1"></i>Watch Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center">
+            <p class="lead">Select your current mood to get personalized movie recommendations!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
