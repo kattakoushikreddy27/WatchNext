@@ -35,12 +35,19 @@ header {
     z-index: 100;
 }
 
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    height: 50px; /* Reduced height to a standard size */
+    padding: 5px 15px; /* Smaller padding for a compact look */
+    background-color: rgba(255, 255, 255, 0.8); /* Light white with slight transparency */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle bottom border */
+    border-radius: 8px; /* Slightly rounded corners for a modern feel */
 }
+
 
 .logo {
     font-size: 24px;
@@ -87,8 +94,21 @@ header {
 }
 
 /* Add to existing styles */
+.mood-selector-section{
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.mood-selector {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
 .mood-matcher-section {
     padding: 4rem 0;
+
     background-color: var(--secondary-background);
 }
 .mood-btn {
@@ -109,12 +129,7 @@ header {
     color: white;
     border-color: var(--primary-color);
 }
-.mood-selector {
-    background-color: var(--background-color);
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
+
 
 
 /* Buttons */
@@ -152,23 +167,49 @@ header {
 
 /* Search Box */
 .search-container {
-    margin: 40px auto;
-    max-width: 600px;
+    padding: 20px;
 }
 
-.search-box {
-    width: 100%;
-    padding: 16px 24px;
-    font-size: 18px;
-    border-radius: 980px;
-    border: 1px solid var(--border-color);
+.input-group {
+    max-width: 100%;
+}
+
+#searchInput {
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #007bff;
     outline: none;
-    transition: all 0.3s ease;
 }
 
-.search-box:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.3);
+.btn-primary {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.movie-card {
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 /* Movie Cards */

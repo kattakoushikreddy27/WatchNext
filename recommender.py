@@ -59,6 +59,29 @@ class MovieRecommender:
         # Sort by rating and return top N movies
         return mood_movies.nlargest(n, 'rating').to_dict('records')
 
+    def get_similar_movies(self, movie_id, n=5):
+        """Find similar movies based on content similarity."""
+        if movie_id not in self.movies_df['id'].values:
+            raise IndexError("Movie ID not found")
+
+        # Get the index of the movie in the DataFrame
+        idx = self.movies_df.index[self.movies_df['id'] == movie_id][0]
+
+        # Get pairwise similarity scores for that movie
+        sim_scores = list(enumerate(self.cosine_sim[idx]))
+
+        # Sort movies based on similarity scores (descending order)
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+        # Get the top N similar movies (skip the first because it's the same movie)
+        sim_scores = sim_scores[1:n + 1]
+
+        # Get the movie indices
+        movie_indices = [i[0] for i in sim_scores]
+
+        # Return the top similar movies
+        return self.movies_df.iloc[movie_indices].to_dict('records')
+
     def get_available_moods(self):
         """Get list of available moods for recommendations."""
         return list(self.mood_mapping.keys())
